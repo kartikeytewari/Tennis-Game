@@ -13,6 +13,8 @@ let ball_speed_y=2;
 
 // configuration of paddle
 const paddle_length=100;
+const paddle_width=5;
+let left_y;
 
 // loading on screen
 window.onload=function()
@@ -33,6 +35,14 @@ window.onload=function()
     });
 }
 
+function ball_reset()
+{
+    ball_x=canvas.width/2;
+    ball_y=canvas.height/2;
+    ball_speed_x=2;
+    ball_speed_y=2;
+}
+
 function make_background()
 {
     canvas_context.fillStyle="black";
@@ -51,7 +61,18 @@ function make_partition()
 function make_paddle_left()
 {
     canvas_context.fillStyle="white";
-    canvas_context.fillRect(0,(canvas.height-paddle_length)/2,10,paddle_length);
+    if ((left_y>=paddle_length/2)&&(left_y<=canvas.height-(paddle_length/2)))
+    {
+        canvas_context.fillRect(0,left_y-(paddle_length/2),paddle_width,paddle_length);
+    }
+    else if (left_y<paddle_length/2)
+    {
+        canvas_context.fillRect(0,0,paddle_width,paddle_length);
+    }
+    else
+    {
+        canvas_context.fillRect(0,canvas.height-paddle_length,paddle_width,paddle_length);
+    }
 }
 
 function make_paddle_right()
@@ -59,15 +80,15 @@ function make_paddle_right()
     canvas_context.fillStyle="white";
     if ((mouse_pos.y>=paddle_length/2)&&(mouse_pos.y<=canvas.height-(paddle_length/2)))
     {
-        canvas_context.fillRect(canvas.width-10,mouse_pos.y-(paddle_length/2),10,paddle_length);
+        canvas_context.fillRect(canvas.width-paddle_width,mouse_pos.y-(paddle_length/2),paddle_width,paddle_length);
     }
     else if (mouse_pos.y<paddle_length/2)
     {
-        canvas_context.fillRect(canvas.width-10,0,10,paddle_length);
+        canvas_context.fillRect(canvas.width-paddle_width,0,paddle_width,paddle_length);
     }
     else
     {
-        canvas_context.fillRect(canvas.width-10,canvas.height-paddle_length,10,paddle_length);
+        canvas_context.fillRect(canvas.width-paddle_width,canvas.height-paddle_length,paddle_width,paddle_length);
     }
 }
 
@@ -103,11 +124,25 @@ function configure_direction()
     // Bouncing in X-axis
     if (ball_x<=0)
     {
-        ball_speed_x=-ball_speed_x;
+        if ((left_y-(paddle_length/2)<=ball_y)&&(ball_y<=left_y+(paddle_length/2)))
+        {
+            ball_speed_x=-ball_speed_x;
+        }
+        else
+        {
+            ball_reset();
+        }
     }
     else if (ball_x>=canvas.width)
     {
-        ball_speed_x=-ball_speed_x;
+        if ((mouse_pos.y-(paddle_length/2)<=ball_y)&&(ball_y<=mouse_pos.y+(paddle_length/2)))
+        {
+            ball_speed_x=-ball_speed_x;
+        }
+        else
+        {
+            ball_reset();
+        }
     }
 
     // Bouncing in Y-axis
