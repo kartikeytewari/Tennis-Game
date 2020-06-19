@@ -6,8 +6,8 @@ canvas.width  = window.innerWidth;
 canvas.height = window.innerHeight;
 
 // configuration of ball
-let ball_x=0;
-let ball_y=0;
+let ball_x=10;
+let ball_y=10;
 let ball_speed_x=2;
 let ball_speed_y=2;
 
@@ -31,7 +31,9 @@ function make_background()
 function make_ball()
 {
     canvas_context.fillStyle="white";
-    canvas_context.fillRect(ball_x,ball_y,10,10);
+    canvas_context.beginPath();
+    canvas_context.arc(ball_x, ball_y, 10, 0, 2*Math.PI, true);
+    canvas_context.fill();
 }
 
 function move_ball()
@@ -42,6 +44,7 @@ function move_ball()
 
 function configure_direction()
 {
+    // Bouncing in X-axis
     if (ball_x==0)
     {
         ball_speed_x=2;
@@ -51,6 +54,7 @@ function configure_direction()
         ball_speed_x=-2;
     }
 
+    // Bouncing in Y-axis
     if (ball_y==0)
     {
         ball_speed_y=2;
