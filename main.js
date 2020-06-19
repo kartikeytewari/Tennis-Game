@@ -14,7 +14,7 @@ let ball_speed_y=2;
 // configuration of paddle
 const paddle_length=100;
 const paddle_width=5;
-let left_y;
+let left_y=0;
 
 // loading on screen
 window.onload=function()
@@ -25,6 +25,7 @@ window.onload=function()
         make_paddle_left();
         make_paddle_right();
         make_ball();
+        auto_left_movement();
         configure_direction();
         move_ball();
     },1000/frame_rate);
@@ -35,12 +36,24 @@ window.onload=function()
     });
 }
 
+function auto_left_movement()
+{
+    if (left_y<=ball_y-50)
+    {
+        left_y=left_y+10;
+    }
+    else if (left_y>=ball_y+50)
+    {
+        left_y=left_y-10;
+    }
+}
+
 function ball_reset()
 {
     ball_x=canvas.width/2;
-    ball_y=canvas.height/2;
-    ball_speed_x=2;
-    ball_speed_y=2;
+    ball_y=canvas.height*Math.random();
+    ball_speed_x=(Math.random()*2)+2;
+    ball_speed_y=(Math.random()*2)+2;
 }
 
 function make_background()
