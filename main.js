@@ -16,15 +16,23 @@ const paddle_length=100;
 const paddle_width=5;
 let left_y=0;
 
+// initial score configuration
+let score_user=0;
+let score_comp=0;
+const win_score=3;
+let result_screen=false;
+
 // loading on screen
 window.onload=function()
 {
     setInterval(function(){
         make_background();
+        show_result_screen();
         make_partition();
         make_paddle_left();
         make_paddle_right();
         make_ball();
+        show_score();
         auto_left_movement();
         configure_direction();
         move_ball();
@@ -34,6 +42,31 @@ window.onload=function()
     {
         mouse_pos=mouse_position_calc(evt);
     });
+}
+
+function show_result_screen()
+{
+    if (result_screen)
+    {
+        result_screen=false;
+        if (score_comp>score_user)
+        {
+            window.location.replace("win_computer.html")
+        }
+        else
+        {
+            window.location.replace("win_user.html");
+        }
+        score_user=0;
+        score_comp=0;
+    }
+}
+
+function show_score()
+{
+    canvas_context.fillStyle="white";
+    canvas_context.fillText(score_comp,200,150);
+    canvas_context.fillText(score_user,canvas.width-200,150);
 }
 
 function auto_left_movement()
@@ -50,6 +83,11 @@ function auto_left_movement()
 
 function ball_reset()
 {
+    if ((score_comp==win_score)||(score_user==win_score))
+    {
+        result_screen=true;
+    }
+
     ball_x=canvas.width/2;
     ball_y=canvas.height*Math.random();
     ball_speed_x=(Math.random()*2)+2;
@@ -137,23 +175,29 @@ function configure_direction()
     // Bouncing in X-axis
     if (ball_x<=0)
     {
-        if ((left_y-(paddle_length/2)<=ball_y)&&(ball_y<=left_y+(paddle_length/2)))
+        if ((left_y-(paddle_length/2)-2<=ball_y)&&(ball_y<=left_y+(paddle_length/2)+2))
         {
             ball_speed_x=-ball_speed_x;
+            let delta=Math.abs(ball_y-left_y);
+            ball_speed_y=(delta/25)+1;
         }
         else
         {
+            score_user++;
             ball_reset();
         }
     }
     else if (ball_x>=canvas.width)
     {
-        if ((mouse_pos.y-(paddle_length/2)<=ball_y)&&(ball_y<=mouse_pos.y+(paddle_length/2)))
+        if ((mouse_pos.y-(paddle_length/2)-2<=ball_y)&&(ball_y<=mouse_pos.y+(paddle_length/2)+2))
         {
             ball_speed_x=-ball_speed_x;
+            let delta=Math.abs(ball_y-mouse_pos.y);
+            ball_speed_y=(delta/25)+1;
         }
         else
         {
+            score_comp++;
             ball_reset();
         }
     }
