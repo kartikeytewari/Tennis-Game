@@ -11,12 +11,17 @@ let ball_y=canvas.height/2;
 let ball_speed_x=2;
 let ball_speed_y=2;
 
+// configuration of paddle
+const paddle_length=100;
+
 // loading on screen
 window.onload=function()
 {
     setInterval(function(){
         make_background();
         make_partition();
+        make_paddle_left();
+        make_paddle_right();
         make_ball();
         configure_direction();
         move_ball();
@@ -36,6 +41,18 @@ function make_partition()
     {
         canvas_context.fillRect((canvas.width/2)-1,i,2,30);
     }
+}
+
+function make_paddle_left()
+{
+    canvas_context.fillStyle="white";
+    canvas_context.fillRect(0,(canvas.height-paddle_length)/2,10,paddle_length);
+}
+
+function make_paddle_right()
+{
+    canvas_context.fillStyle="white";
+    canvas_context.fillRect(canvas.width-10,(canvas.height-paddle_length)/2,10,paddle_length);
 }
 
 function make_ball()
