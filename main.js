@@ -5,9 +5,9 @@ const frame_rate=200;
 canvas.width  = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// configuration of ball
-let ball_x=10;
-let ball_y=10;
+// initial configuration of ball
+let ball_x=canvas.width/2;
+let ball_y=canvas.height/2;
 let ball_speed_x=2;
 let ball_speed_y=2;
 
@@ -16,6 +16,7 @@ window.onload=function()
 {
     setInterval(function(){
         make_background();
+        make_partition();
         make_ball();
         configure_direction();
         move_ball();
@@ -26,6 +27,15 @@ function make_background()
 {
     canvas_context.fillStyle="black";
     canvas_context.fillRect(0,0,canvas.width,canvas.height);
+}
+
+function make_partition()
+{
+    canvas_context.fillStyle="white";
+    for (let i=10;i<=canvas.height;i=i+40)
+    {
+        canvas_context.fillRect((canvas.width/2)-1,i,2,30);
+    }
 }
 
 function make_ball()
@@ -45,22 +55,22 @@ function move_ball()
 function configure_direction()
 {
     // Bouncing in X-axis
-    if (ball_x==0)
+    if (ball_x<=0)
     {
-        ball_speed_x=2;
+        ball_speed_x=-ball_speed_x;
     }
-    else if (ball_x==canvas.width)
+    else if (ball_x>=canvas.width)
     {
-        ball_speed_x=-2;
+        ball_speed_x=-ball_speed_x;
     }
 
     // Bouncing in Y-axis
-    if (ball_y==0)
+    if (ball_y<=0)
     {
-        ball_speed_y=2;
+        ball_speed_y=-ball_speed_y;
     }
-    else if (ball_y==canvas.height)
+    else if (ball_y>=canvas.height)
     {
-        ball_speed_y=-2;
+        ball_speed_y=-ball_speed_y;
     }
 }
