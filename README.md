@@ -19,5 +19,5 @@ To play the game
 <li> Now open the index.html file in a browser </li>
 </ol>
 
-See a live version of website <a href="https://kartikeytewari.github.io/Tennis-Game/">here</a>.
+See a live version of website <a href="https://kartikeytewari.github.io/Tennis-Game/index.html">here</a>.
 To report bugs/feature updates feel free to ping the developer at kartikeya30@gmail.com
