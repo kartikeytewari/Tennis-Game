@@ -1,5 +1,5 @@
 # Tennis-Game
-An arcade game from the 1980s powered with a state-of-the-art Artificial Intelligence Engine, straigt from the twenty-first century.<br>
+An arcade game from the 1980s powered with a state-of-the-art Artificial Intelligence Engine, straight from the twenty-first century.<br>
 This project is made for the course of Software Engineering, and is a part of final term evaluation.
 
 Tech stack Used:
