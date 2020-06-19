@@ -26,6 +26,11 @@ window.onload=function()
         configure_direction();
         move_ball();
     },1000/frame_rate);
+
+    canvas.addEventListener("mousemove",function(evt)
+    {
+        mouse_pos=mouse_position_calc(evt);
+    });
 }
 
 function make_background()
@@ -37,7 +42,7 @@ function make_background()
 function make_partition()
 {
     canvas_context.fillStyle="white";
-    for (let i=10;i<=canvas.height;i=i+40)
+    for (let i=2;i<=canvas.height;i=i+40)
     {
         canvas_context.fillRect((canvas.width/2)-1,i,2,30);
     }
@@ -52,7 +57,18 @@ function make_paddle_left()
 function make_paddle_right()
 {
     canvas_context.fillStyle="white";
-    canvas_context.fillRect(canvas.width-10,(canvas.height-paddle_length)/2,10,paddle_length);
+    if ((mouse_pos.y>=paddle_length/2)&&(mouse_pos.y<=canvas.height-(paddle_length/2)))
+    {
+        canvas_context.fillRect(canvas.width-10,mouse_pos.y-(paddle_length/2),10,paddle_length);
+    }
+    else if (mouse_pos.y<paddle_length/2)
+    {
+        canvas_context.fillRect(canvas.width-10,0,10,paddle_length);
+    }
+    else
+    {
+        canvas_context.fillRect(canvas.width-10,canvas.height-paddle_length,10,paddle_length);
+    }
 }
 
 function make_ball()
@@ -61,6 +77,19 @@ function make_ball()
     canvas_context.beginPath();
     canvas_context.arc(ball_x, ball_y, 10, 0, 2*Math.PI, true);
     canvas_context.fill();
+}
+
+function mouse_position_calc(evt)
+{
+    var rect=canvas.getBoundingClientRect();
+    var root=document.documentElement;
+    var mouse_x=evt.clientX-rect.left-root.scrollLeft;
+    var mouse_y=evt.clientY-rect.top-root.scrollTop;
+
+    return{
+        x:mouse_x,
+        y:mouse_y
+    };
 }
 
 function move_ball()
