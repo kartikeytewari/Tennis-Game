@@ -19,7 +19,7 @@ let left_y=0;
 // initial score configuration
 let score_user=0;
 let score_comp=0;
-const win_score=3;
+const win_score=10;
 let result_screen=false;
 
 // loading on screen
