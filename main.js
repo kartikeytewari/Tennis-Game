@@ -38,8 +38,13 @@ window.onload=function()
         move_ball();
     },1000/frame_rate);
 
-    canvas.addEventListener("mousemove",function(evt)
-    {
+    function handleInteraction(evt) {
+        evt.preventDefault();
+    }
+    canvas.addEventListener('touchmove', function(evt){
+        mouse_pos=mouse_position_calc(evt);
+    });
+    canvas.addEventListener('mousemove', function(evt){
         mouse_pos=mouse_position_calc(evt);
     });
 }
